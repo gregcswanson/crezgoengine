@@ -3,10 +3,10 @@ package infrastructure
 import (
 	"net/http"
 	"encoding/json"
-	//"gorilla/schema"
+	"vendor/gorilla/schema"
 )
 
-//var decoder = schema.NewDecoder() // global decoder that caches struct reflections
+var decoder = schema.NewDecoder() // global decoder that caches struct reflections
 
 type JSendResponse struct {
 	Status	string

@@ -18,5 +18,7 @@ func Current(w http.ResponseWriter, r *http.Request) {
   // get the data
   userName, _ := commentInteractor.CurrentUserName()
   message := fmt.Sprintf("Hello, %s!",userName)
-  fmt.Fprint(w, message)
+  //fmt.Fprint(w, message)
+  j := &infrastructure.JSendResponse{Status: "success", Message: ""}
+  j.SendData(&message, w)
 }
