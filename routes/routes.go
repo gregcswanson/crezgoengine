@@ -12,6 +12,7 @@ func Configure() {
   http.HandleFunc("/user", usersController.Current)
   http.HandleFunc("/comments", commentsController.Index)
   http.HandleFunc("/404", homeController.FourZeroFour)
+  http.HandleFunc("/500", homeController.FiveZeroZero)
 }
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
