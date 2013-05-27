@@ -6,4 +6,5 @@ import (
 
 func init() {
   routes.Configure()
+  routes.ConfigureAPI()
 }
