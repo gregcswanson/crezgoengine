@@ -9,6 +9,8 @@ import (
 
 func Configure() {
   http.HandleFunc("/", MainPage)
+  http.HandleFunc("/login", homeController.Login)
+  http.HandleFunc("/logout", homeController.Logout)
   http.HandleFunc("/styleguide", homeController.Styleguide)
   http.HandleFunc("/user", usersController.Current)
   http.HandleFunc("/comments", commentsController.Index)

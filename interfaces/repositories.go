@@ -3,6 +3,8 @@ package interfaces
 import (
 	"domain"
   "net/http"
+  "appengine"
+  "appengine/user"
 )
 
 type BaseRepository struct {
@@ -25,13 +27,52 @@ func NewCommentRepositiory(request *http.Request) *CommentRepositiory {
 }
 
 func (repository *UserRepositiory) FindCurrent() domain.User {
+  // is the current user logged in
+  c := appengine.NewContext(repository.request)
+  u := user.Current(c)
   var user domain.User
   user = domain.User{}
-  user.Id = 1
-  user.Name = "Bob Smith"
-  user.Email = "bob@smith.com"
+  if u == nil {
+    user.Id = 0
+    user.Name = ""
+    user.Nickname = ""
+    user.Email = ""
+    user.IsLoggedIn = false
+  } else {
+    user.Id = 1
+    user.Name = ""
+    user.Nickname = ""
+    user.Email = u.Email
+    user.IsLoggedIn = true
+  }  
   return user
 }
+
+func (repository *UserRepositiory) Store(user domain.User) domain.User {
+  var u = domain.User{}
+  return u
+}
+
+func (repository *UserRepositiory) LoginUrl()  (string, error){
+  c := appengine.NewContext(repository.request)
+  u := user.Current(c)
+    if u == nil {
+        url, err := user.LoginURL(c, repository.request.URL.String())
+        return url, err
+    }
+  return "/", nil 
+}
+
+func (repository *UserRepositiory) LogoutUrl()  (string, error){
+  c := appengine.NewContext(repository.request)
+  u := user.Current(c)
+  if u != nil {
+    url, err := user.LogoutURL(c, repository.request.URL.String())
+    return url, err
+  }
+  return "/", nil 
+}
+
 
 func (repository *CommentRepositiory) Store(comment domain.Comment) {
 	// save the comment using the storage context
