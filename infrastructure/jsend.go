@@ -6,6 +6,8 @@ import (
 	"vendor/gorilla/schema"
 )
 
+// TO DO: Write tests using http://golang.org/pkg/net/http/httptest/
+
 var decoder = schema.NewDecoder() // global decoder that caches struct reflections
 
 type JSendResponse struct {
